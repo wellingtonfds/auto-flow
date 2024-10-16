@@ -32,7 +32,7 @@ model History {
   carId     Int
   driverId  Int
   startDate DateTime
-  endDate   DateTime
+  endDate   DateTime?
   reason   String
   car      Car    @relation(fields: [carId], references: [id])
   driver  Driver  @relation(fields: [driverId], references: [id])
