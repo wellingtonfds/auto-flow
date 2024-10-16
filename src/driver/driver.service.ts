@@ -1,26 +1,37 @@
 import { Injectable } from '@nestjs/common';
+import { Driver } from '@prisma/client';
 import { CreateDriverDto } from './dto/create-driver.dto';
+import { PaginationDriverDTO } from './dto/pagination-driver.dto';
 import { UpdateDriverDto } from './dto/update-driver.dto';
+import { DriverRepository } from './repository/driver.repository';
 
 @Injectable()
 export class DriverService {
-  create(createDriverDto: CreateDriverDto) {
-    return 'This action adds a new driver';
+
+  constructor(private driverRepository: DriverRepository) {
+
+  }
+  public async create(data: CreateDriverDto): Promise<Driver> {
+    return this.driverRepository.create(data)
   }
 
-  findAll() {
-    return `This action returns all driver`;
+  public async findAll({ skip = 0, take = 10, name }: PaginationDriverDTO): Promise<Driver[]> {
+    const AND = []
+    if (name) {
+      AND.push({ name })
+    }
+    return this.driverRepository.findMany({ AND }, skip, take)
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} driver`;
+  public async findOne(id: number): Promise<Driver> {
+    return this.driverRepository.findOne(id)
   }
 
-  update(id: number, updateDriverDto: UpdateDriverDto) {
-    return `This action updates a #${id} driver`;
+  public async update(id: number, data: UpdateDriverDto): Promise<Driver> {
+    return this.driverRepository.update(data, { id })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} driver`;
+  public async remove(id: number): Promise<void> {
+    await this.driverRepository.delete(id)
   }
 }
