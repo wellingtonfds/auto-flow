@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { CreateHistoryRepositoryDto } from "../dto/create-history-repository.dto";
+import { ResponseListHistoryDTO } from "../dto/response-list-history.dto";
 
 export class HistoryRepository extends PrismaClient {
 
@@ -27,6 +28,15 @@ export class HistoryRepository extends PrismaClient {
             where: {
                 driverId,
                 endDate: null
+            }
+        })
+    }
+
+    public async list(): Promise<ResponseListHistoryDTO[]> {
+        return this.history.findMany({
+            include: {
+                car: true,
+                driver: true
             }
         })
     }

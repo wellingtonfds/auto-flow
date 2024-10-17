@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateHistoryRepositoryDto } from './dto/create-history-repository.dto';
 import { CreateHistoryDto } from './dto/create-history.dto';
+import { ResponseListHistoryDTO } from './dto/response-list-history.dto';
 import { UpdateHistoryDto } from './dto/update-history.dto';
 import { HistoryRepository } from './repository/history.repository';
 
@@ -44,5 +45,9 @@ export class HistoryService {
 
   public async countHasDriverWithCar(carId: number): Promise<number> {
     return this.historyRepository.countHasDriverWithCar(carId)
+  }
+
+  public async list(): Promise<ResponseListHistoryDTO[]> {
+    return this.historyRepository.list()
   }
 }
