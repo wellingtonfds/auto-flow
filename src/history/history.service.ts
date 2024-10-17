@@ -16,11 +16,11 @@ export class HistoryService {
     ])
 
     if (isValidCar) {
-      throw new HttpException('car in use ', HttpStatus.CONFLICT)
+      throw new HttpException('car in use', HttpStatus.CONFLICT)
     }
 
     if (isValidDriver) {
-      throw new HttpException('driver with car ', HttpStatus.CONFLICT)
+      throw new HttpException('driver with car', HttpStatus.CONFLICT)
     }
     return this.historyRepository.create({
       car: {

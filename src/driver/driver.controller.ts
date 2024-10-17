@@ -40,8 +40,8 @@ export class DriverController {
     description: 'Driver not found.',
     type: NotFoundErrorDto,
   })
-  public async findOne(@Param('id') id: string): Promise<Driver> {
-    return this.driverService.findOne(+id);
+  public async findOne(@Param('id') id: number): Promise<Driver> {
+    return this.driverService.findOne(id);
   }
 
   @Patch(':id')
